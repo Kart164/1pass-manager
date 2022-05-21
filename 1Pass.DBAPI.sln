@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1Pass.DBAPI", "1Pass.DBAPI\1Pass.DBAPI.csproj", "{FA6BCCD1-31C2-41DF-954F-6A0723F020D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1Pass.DBAPI", "1Pass.DBAPI\1Pass.DBAPI.csproj", "{FA6BCCD1-31C2-41DF-954F-6A0723F020D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1Pass.DBEngine", "1Pass.DBEngine\1Pass.DBEngine.csproj", "{9282C801-4748-4EF7-822A-F1AF08BEEE00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{FA6BCCD1-31C2-41DF-954F-6A0723F020D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA6BCCD1-31C2-41DF-954F-6A0723F020D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA6BCCD1-31C2-41DF-954F-6A0723F020D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9282C801-4748-4EF7-822A-F1AF08BEEE00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9282C801-4748-4EF7-822A-F1AF08BEEE00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9282C801-4748-4EF7-822A-F1AF08BEEE00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9282C801-4748-4EF7-822A-F1AF08BEEE00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

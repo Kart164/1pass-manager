@@ -6,7 +6,7 @@ namespace _1Pass.DBEngine
 {
     public static class UpgradeEngine
     {
-        static int UpdgradeToActualVersion(string connection)
+        public static int UpdgradeToActualVersion(string connection)
         {
             var dbUpgradeEngine = DeployChanges.To
                 .SQLiteDatabase(connection)
@@ -32,7 +32,7 @@ namespace _1Pass.DBEngine
             }
 
             Console.WriteLine("Database is up to date now.");
-            return 0;
+            return 1;
         }
     }
 }

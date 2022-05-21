@@ -65,6 +65,5 @@ namespace _1Pass.DBAPI
             }
         }
 
-
     }
 }

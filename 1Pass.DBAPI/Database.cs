@@ -1,10 +1,12 @@
 ﻿using _1Pass.DBEngine;
+using Dapper;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace _1Pass.DBAPI
 {
@@ -32,7 +34,7 @@ namespace _1Pass.DBAPI
         
         public int CreateDatabase()
         {
-            var connection = GetConnection();
+            using var connection = GetConnection();
             try
             {
                 connection.Open();
@@ -77,6 +79,29 @@ namespace _1Pass.DBAPI
                 return -1;
             }
             return 1;
+        }
+
+        public async Task<bool> TryLogin(string pass)
+        {
+            Password = pass;
+            using var connection=GetConnection();
+            var command = "select count(seq) from sqlite_sequence";
+            try
+            {
+                connection.Open();
+                var res = await connection.ExecuteScalarAsync<int>(command,CommandType.Text).ConfigureAwait(false);
+                return res >= 0;
+            }
+            catch (Exception)
+            {
+
+                return false;
+
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
         public bool CheckExistence=>File.Exists(_dataSource);

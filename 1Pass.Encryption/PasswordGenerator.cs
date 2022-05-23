@@ -5,14 +5,14 @@ using System.Text;
 
 namespace _1Pass.Encryption
 {
-    public class PasswordGenerator
+    public static class PasswordGenerator
     {
-        private string lowers = "abcdefghijklmnopqrstuvwxyz";
-        private string uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        private string number = "0123456789";
-        private string special = "*$-+?_&=!%{}/";
+        private static string lowers = "abcdefghijklmnopqrstuvwxyz";
+        private static string uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private static string number = "0123456789";
+        private static string special = "*$-+?_&=!%{}/";
 
-        public string Generate(int length, bool withSpecialSymbols)
+        public static string Generate(int length = 16, bool withSpecialSymbols = true)
         {
             var alphabet = lowers+uppers+number;
             if (withSpecialSymbols)

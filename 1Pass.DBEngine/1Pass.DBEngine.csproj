@@ -8,12 +8,10 @@
 
   <ItemGroup>
     <None Remove="Scripts\Create_Tables.sql" />
-    <None Remove="Scripts\Pragmas.sql" />
     <None Remove="Scripts\Static_Data.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\Pragmas.sql" />
     <EmbeddedResource Include="Scripts\Static_Data.sql" />
   </ItemGroup>
 

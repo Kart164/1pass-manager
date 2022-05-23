@@ -8,6 +8,8 @@ namespace _1Pass.Entities
 
         public string Username { get; set; }
 
+        public string Password { get; set; }
+
         public int ServiceId { get; set; }
 
         public DateTime LastUpdate { get; set; }

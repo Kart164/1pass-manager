@@ -1,10 +1,8 @@
 ﻿using _1Pass.Entities;
 using Dapper;
-using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace _1Pass.DBAPI
@@ -20,7 +18,7 @@ namespace _1Pass.DBAPI
 
         public async Task<int> CreateServiceAsync(Service service)
         {
-            var command = "INSERT INTO \"Service\" (\"Name\") VALUES (@name); SELECT \"Id\" FROM \"Services\" WHERE \"Name\"=@name";
+            var command = "INSERT INTO \"Services\" (\"Name\") VALUES (@name); SELECT \"Id\" FROM \"Services\" WHERE \"Name\"=@name";
             var parameters = new DynamicParameters();
             parameters.Add("@name", service.Name);
             using var connection = _db.GetConnection();
@@ -48,7 +46,7 @@ namespace _1Pass.DBAPI
 
         public async Task<Service> UpdateServiceAsync(Service service)
         {
-            var command = "UPDATE \"Service\" SET \"Name\" = @name \"LastUpdate\" = date() WHERE \"Id\"=@id; SELECT * FROM \"Services\" WHERE \"Id\"=@id";
+            var command = "UPDATE \"Services\" SET \"Name\" = @name \"LastUpdate\" = date() WHERE \"Id\"=@id; SELECT * FROM \"Services\" WHERE \"Id\"=@id";
             var parameters = new DynamicParameters();
             parameters.Add("@name", service.Name);
             parameters.Add("@id",service.Id);
@@ -77,7 +75,7 @@ namespace _1Pass.DBAPI
 
         public async Task<int> DeleteServicesAsync(int id)
         {
-            var command = "DELETE FROM \"Service\" WHERE \"Id\"=@id; SELECT * FROM \"Services\" WHERE \"Id\"=@id";
+            var command = "DELETE FROM \"Services\" WHERE \"Id\"=@id; SELECT \"Id\" FROM \"Services\" WHERE \"Id\"=@id";
             var parameters = new DynamicParameters();
             parameters.Add("@id", id);
             using var connection = _db.GetConnection();

@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>_1Pass.NetStandart.Libs.DBAPI</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Scripts\Create_Tables.sql" />
+    <None Remove="Scripts\Static_Data.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\Create_Tables.sql" />
+    <EmbeddedResource Include="Scripts\Static_Data.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="dbup-sqlite" Version="4.6.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="6.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlcipher" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\1Pass.NetStandart.Libs.Entities\1Pass.NetStandart.Libs.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

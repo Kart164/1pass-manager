@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:_1Pass.UI.XamarinUi" 
+             xmlns:partialpages="clr-namespace:_1Pass.UI.XamarinUi.PartialPages" 
+             xmlns:entities="clr-namespace:_1Pass.NetStandart.Libs.Entities;assembly=1Pass.NetStandart.Libs.Entities"
+             x:Class="_1Pass.UI.XamarinUi.Pages.ServicesPage">
+    <StackLayout x:Name="layout">
+        <Label Text="Services" HorizontalTextAlignment="Center"/>
+        <SearchBar Placeholder="Search..." 
+                   TextChanged="SearchBar_TextChanged"
+                   TextTransform="Lowercase"
+                   HorizontalTextAlignment="Center"
+                   FontSize="Medium"/>
+        <Grid MinimumHeightRequest="70">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="0.2*"/>
+            </Grid.ColumnDefinitions>
+            <Entry x:Name="newService" Grid.Column="0" Placeholder="Enter new service" FontSize="Medium" />
+            <Button x:Name="AddBtn" Grid.Column="1" Text="Add" Clicked="AddBtn_Clicked" BackgroundColor="CadetBlue" FontSize="Medium"/>
+        </Grid>
+        <ListView x:Name="listview" x:DataType="entities:Service" ItemTapped="Handle_ItemTapped" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <partialpages:ServiceCell ServiceId="{Binding Id}" 
+                                              ServiceName="{Binding Name}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

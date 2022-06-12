@@ -7,7 +7,7 @@ namespace _1Pass.Encryption
 {
     public static class CharArrayShuffler
     {
-        public static char[] Shuffle(params char[] chars)
+        public static char[] Shuffle(this char[] arr,params char[] chars)
         {
             int n = chars.Length;
             while (n>1)

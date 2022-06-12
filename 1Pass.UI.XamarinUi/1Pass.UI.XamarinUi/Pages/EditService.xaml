@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="_1Pass.UI.XamarinUi.Pages.EditService">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center">
+            <Label x:Name="labl"  Text="Edit service" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+            <Entry x:Name="serviceNew" FontSize="Medium"/>
+            <Button x:Name="saveBtn" Text="Save changes" BackgroundColor="CadetBlue" FontSize="Medium" Clicked="saveBtn_Clicked" HorizontalOptions="Center"/>            
+            <Button x:Name="cancelBtn" Text="Cancel" BackgroundColor="DarkRed" FontSize="Medium" Clicked="cancelBtn_Clicked" HorizontalOptions="Center"/>            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

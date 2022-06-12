@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="_1Pass.UI.XamarinUi.Pages.Register">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" VerticalOptions="Center">
+            <Label x:Name="WelcomeText" FontSize="Large" HorizontalTextAlignment="Center" Text="Welcome to 1Pass!&#10;Enter password or generate:"/>
+            <Entry x:Name="Password" TextChanged="Password_TextChanged" IsPassword="True" Placeholder="Password" PlaceholderColor="LightGray" FontSize="Medium"/>
+            <Label x:Name="Error" HorizontalTextAlignment="Center" FontSize="Medium" IsVisible="False"/>
+            <Button x:Name="Submit" Text="Register" IsEnabled="False" BackgroundColor="CadetBlue" TextColor="White" FontSize="Large" Clicked="Submit_OnClick"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Text="Use special symbols?" HorizontalTextAlignment="End" VerticalOptions="Center" Margin="0,0,-20,0"/>
+                <CheckBox x:Name="UseSymbols" Grid.Column="1" IsChecked="False" HorizontalOptions="Start" VerticalOptions="Center" Margin="30,0,0,0"/>
+            </Grid>
+            <Label x:Name="GeneratedPassLabel" TextColor="LightGreen" FontSize="Medium" HorizontalTextAlignment="Center" IsVisible="False"/>
+            <Button x:Name="GeneratePass" Text="Generate Password" BackgroundColor="LightGreen" FontSize="Large" Clicked="GeneratePassword_OnClick"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

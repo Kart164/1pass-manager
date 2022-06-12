@@ -7,20 +7,14 @@ using System.Threading.Tasks;
 
 namespace _1Pass.Encryption
 {
-    public class Encrypter
+    public static class Encrypter
     {
-        private byte[] _key;
 
-        public Encrypter(string key)
-        {
-            _key = Encoding.UTF8.GetBytes(key);
-        }
-
-        public async Task<string> Encrypt(string pass, string salt)
+        public static async Task<string> Encrypt(string key, string passToCrypt, string salt)
         {
             byte[] cryptedBytes;
-            var passBytes = Encoding.UTF8.GetBytes(pass);
-            var keyForAes= new Rfc2898DeriveBytes( _key, Encoding.UTF8.GetBytes(salt), 32768);
+            var passBytes = Encoding.UTF8.GetBytes(passToCrypt);
+            var keyForAes= new Rfc2898DeriveBytes(Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(salt), 32768);
 
             using var aes = new AesManaged();
             aes.KeySize = 256;
@@ -34,19 +28,15 @@ namespace _1Pass.Encryption
 
             cryptedBytes=mems.ToArray();
 
-            var sb = new StringBuilder();
-            foreach (var cryptbyte in cryptedBytes)
-            {
-                sb.Append(cryptbyte.ToString("x2"));
-            }
-            return sb.ToString();
+            
+            return Convert.ToBase64String(cryptedBytes);
         }
 
-        public async Task<string> Decrypt(string cryptedPass,string salt)
+        public static async Task<string> Decrypt(string key, string cryptedPass,string salt)
         {
             byte[] decrypted;
-            var cryptedPassBytes = Encoding.UTF8.GetBytes(cryptedPass);
-            var keyForAes = new Rfc2898DeriveBytes(_key, Encoding.UTF8.GetBytes(salt), 32768);
+            var cryptedPassBytes = Convert.FromBase64String(cryptedPass);
+            var keyForAes = new Rfc2898DeriveBytes(Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(salt), 32768);
 
             using var aes = new AesManaged();
             aes.KeySize = 256;
@@ -60,12 +50,8 @@ namespace _1Pass.Encryption
 
             decrypted = mems.ToArray();
 
-            var sb = new StringBuilder();
-            foreach (var decrbyte in decrypted)
-            {
-                sb.Append(decrbyte.ToString("x2"));
-            }
-            return sb.ToString();
+            return Encoding.UTF8.GetString(decrypted);
         }
     }
 }
+

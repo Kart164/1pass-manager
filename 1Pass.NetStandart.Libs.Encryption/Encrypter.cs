@@ -13,7 +13,7 @@ namespace _1Pass.NetStandart.Libs.Encryption
         {
             byte[] cryptedBytes;
             var passBytes = Encoding.UTF8.GetBytes(passToCrypt);
-            var keyForAes= new Rfc2898DeriveBytes(Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(salt), 32768);
+            var keyForAes= new Rfc2898DeriveBytes(Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(salt+"1PassManager"), 32768);
 
             using (var aes = new AesManaged())
             {
@@ -36,7 +36,7 @@ namespace _1Pass.NetStandart.Libs.Encryption
         {
             byte[] decrypted;
             var cryptedPassBytes = Convert.FromBase64String(cryptedPass);
-            var keyForAes = new Rfc2898DeriveBytes(Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(salt), 32768);
+            var keyForAes = new Rfc2898DeriveBytes(Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(salt + "1PassManager"), 32768);
 
             using (var aes = new AesManaged())
             {

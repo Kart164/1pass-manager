@@ -60,7 +60,7 @@ namespace _1Pass.UI.XamarinUi.Pages
                 }
                 if (await _db.TryLogin(pass))
                 {
-                    App.Current.MainPage = new ServicesPage(Startup.ServiceProvider.GetService<ServiceRepo>());
+                    App.Current.MainPage = new ServicesPage();
                 }
                 else
                 {

@@ -1,4 +1,5 @@
-﻿using _1Pass.NetStandart.Libs.Entities;
+﻿using _1Pass.NetStandart.Libs.Encryption;
+using _1Pass.NetStandart.Libs.Entities;
 using Dapper;
 using System;
 using System.Data;
@@ -18,13 +19,13 @@ namespace _1Pass.NetStandart.Libs.DBAPI
         public async Task<int> CreateAccountAsync(Account account)
         {
             var command = "INSERT INTO \"Accounts\" (\"Username\", \"Password\", \"ServiceId\") " +
-                "VALUES (@username, @password, @seviceid); SELECT MAX(\"Id\") FROM \"Accounts\" " +
+                "VALUES (@username, @password, @serviceid); SELECT MAX(\"Id\") FROM \"Accounts\" " +
                 "WHERE \"Username\"=@username AND \"ServiceId\"=@serviceid;";
             var parameters = new DynamicParameters();
             parameters.Add("@username", account.Username);
-            parameters.Add("@password", account.Password);
+            parameters.Add("@password", await Encrypter.Encrypt(_db.Password, account.Password, account.Username));
             parameters.Add("@serviceid", account.ServiceId);
-
+            
             using (var connection = _db.GetConnection())
             {
                 try
@@ -56,15 +57,15 @@ namespace _1Pass.NetStandart.Libs.DBAPI
 
         public async Task<Account> UpdateAccountAsync(Account account)
         {
-            var command = "UPDATE \"Accounts\" SET \"Username\" = @username" +
-                " \"Password\" = @password " +
+            var command = "UPDATE \"Accounts\" SET \"Username\" = @username," +
+                " \"Password\" = @password, " +
                 "\"LastUpdate\" = date()" +
                 " WHERE \"Id\"=@id; SELECT * FROM \"Accounts\" WHERE \"Id\"=@id";
             var parameters = new DynamicParameters();
             parameters.Add("@username", account.Username);
-            parameters.Add("@password", account.Password);
+            parameters.Add("@password", await Encrypter.Encrypt(_db.Password, account.Password, account.Username));
             parameters.Add("@id", account.Id);
-
+            
             using (var connection = _db.GetConnection())
             {
                 try
@@ -72,7 +73,16 @@ namespace _1Pass.NetStandart.Libs.DBAPI
                     connection.Open();
                     using (var transaction = connection.BeginTransaction())
                     {
-                        var res = await connection.ExecuteScalarAsync<Account>(command, parameters, transaction, commandType: CommandType.Text).ConfigureAwait(false);
+                        Account res = null;
+                        using (var reader = await connection.ExecuteReaderAsync(command, parameters, transaction, commandType: CommandType.Text).ConfigureAwait(false))
+                        {
+                            var rowParser = reader.GetRowParser<Account>();
+                            while (reader.Read())
+                            {
+                                res = rowParser(reader);
+                            }
+                        }
+                        
                         if (res != null)
                         {
                             transaction.Commit();

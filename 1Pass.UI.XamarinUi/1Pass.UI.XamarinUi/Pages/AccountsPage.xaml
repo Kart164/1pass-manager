@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:_1Pass.UI.XamarinUi" 
+             xmlns:partialpages="clr-namespace:_1Pass.UI.XamarinUi.PartialPages" 
+             xmlns:entities="clr-namespace:_1Pass.NetStandart.Libs.Entities;assembly=1Pass.NetStandart.Libs.Entities"
+             x:Class="_1Pass.UI.XamarinUi.Pages.AccountsPage">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <Label x:Name="lbl" Text="Accounts for " FontSize="Large" HorizontalOptions="Center"/>
+
+            <Grid MinimumHeightRequest="200">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.7*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                </Grid.ColumnDefinitions>
+                <StackLayout Orientation="Vertical" Grid.Column="0">
+                    <Entry x:Name="newLogin" Placeholder="Login" FontSize="Medium"/>
+                    <Entry x:Name="newPass" Placeholder="Password" FontSize="Medium"/>
+                </StackLayout>
+
+                <StackLayout Orientation="Vertical" Grid.Column="1">
+                    <Button x:Name="genPass" Text="Gen. Pass" BackgroundColor="CadetBlue" Clicked="genPass_Clicked" FontSize="Medium"/>
+                    <Button x:Name="addAcc" Text="Add Acc." BackgroundColor="Green" Clicked="addAcc_Clicked" FontSize="Medium"/>
+                </StackLayout>
+            </Grid>
+
+            <ListView x:Name="listview" x:DataType="entities:Account" HasUnevenRows="False" VerticalOptions="Center">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <partialpages:AccountCell AccountId="{Binding Id}"
+                                                  AccountName="{Binding Username}"
+                                                  AccountPassword="{Binding Password}"
+                                                  AccountService="{Binding ServiceId}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button x:Name="goBack" Text="Go back to services" FontSize="Medium" HorizontalOptions="Center" BackgroundColor="IndianRed" VerticalOptions="Start" Clicked="goBack_Clicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,5 +1,6 @@
 ﻿using _1Pass.NetStandart.Libs.DBAPI;
 using _1Pass.NetStandart.Libs.Entities;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,18 +13,14 @@ namespace _1Pass.UI.XamarinUi.Pages
     {
         public ServiceRepo Repo { get; set; }
         public ObservableCollection<Service> Services { get; set; }
-        public ServicesPage(ServiceRepo repo)
+        public ServicesPage()
         {
             InitializeComponent();
-
-            Repo = repo;
-            Services = new ObservableCollection<Service>();
+            Repo = Startup.ServiceProvider.GetService<ServiceRepo>();
+   
             var services = Repo.GetServicesAsync().Result;
-            foreach (var item in services)
-            {
-                Services.Add(item);
-            }
-            
+            Services = new ObservableCollection<Service>(services);
+
             listview.ItemsSource = Services;
             this.BindingContext = this;
         }
@@ -32,8 +29,13 @@ namespace _1Pass.UI.XamarinUi.Pages
             if (e.Item == null)
                 return;
 
-            await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
+            var service = e.Item as Service;
+            var res = await Repo.GetServiceWithAccounts(service.Id);
+            res.Id = service.Id;
+            res.Name = service.Name;
+            var page = new AccountsPage(res);
 
+            await App.Current.MainPage.Navigation.PushModalAsync(page);
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
         }
@@ -44,11 +46,7 @@ namespace _1Pass.UI.XamarinUi.Pages
         public async Task ListView_Refreshing(object sender, EventArgs e)
         {
             var services = await Repo.GetServicesAsync();
-            var res = new ObservableCollection<Service>();
-            foreach (var item in services)
-            {
-                res.Add(item);
-            }
+            var res = new ObservableCollection<Service>(services);
 
             Services = res;
             listview.ItemsSource = Services;

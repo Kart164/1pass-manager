@@ -1,4 +1,5 @@
-﻿using _1Pass.NetStandart.Libs.Entities;
+﻿using _1Pass.NetStandart.Libs.Encryption;
+using _1Pass.NetStandart.Libs.Entities;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -200,7 +201,9 @@ namespace _1Pass.NetStandart.Libs.DBAPI
                         var rowParser = reader.GetRowParser<Account>();
                         while (reader.Read())
                         {
-                            entities.Add(rowParser(reader));
+                            var account = rowParser(reader);
+                            account.Password = await Encrypter.Decrypt(_db.Password, account.Password, account.Username);
+                            entities.Add(account);
                         }
                         res.Accounts = entities;
                     }                        

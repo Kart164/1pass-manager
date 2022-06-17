@@ -50,9 +50,7 @@ namespace _1Pass.UI.XamarinUi.Pages
             var res = _db.CreateDatabase();
             if (res>0)
             {
-                Error.Text = "Database Created";
-                Error.TextColor = Color.LightGreen;
-                Error.IsVisible = true;
+                App.Current.MainPage = new ServicesPage();
             }
         }
         private void GeneratePassword_OnClick(object sender, EventArgs args)
